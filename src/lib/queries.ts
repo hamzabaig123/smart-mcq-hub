@@ -105,7 +105,12 @@ export const mcqsQuery = (filters?: {
     if (filters?.status) q = q.eq("status", filters.status);
     if (filters?.subjectId) q = q.eq("subject_id", filters.subjectId);
     if (filters?.chapterId) q = q.eq("chapter_id", filters.chapterId);
-    return unwrap<Mcq[]>(await q);
+    const res = await q;
+    if (res.error) throw new Error(res.error.message);
+    return (res.data ?? []).map((row) => ({
+      ...row,
+      options: Array.isArray(row.options) ? (row.options as string[]) : [],
+    })) as Mcq[];
   },
 });
 
