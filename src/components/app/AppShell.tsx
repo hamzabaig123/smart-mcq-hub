@@ -4,13 +4,13 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 import { profileQuery, mcqsQuery } from "@/lib/queries";
 
-const WORKSPACE = [
+const WORKSPACE: { to: string; label: string; badgeKey?: string }[] = [
   { to: "/", label: "Dashboard" },
   { to: "/syllabus", label: "Syllabus" },
   { to: "/practice", label: "Practice & Test" },
   { to: "/scanner", label: "QR Scanner" },
   { to: "/ai-studio", label: "AI Studio", badgeKey: "pending" },
-] as const;
+];
 
 export function AppShell({
   title,
