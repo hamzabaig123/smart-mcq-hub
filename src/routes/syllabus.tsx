@@ -138,7 +138,8 @@ function Syllabus() {
     const next = window.prompt("New name", current);
     if (!next || next === current) return;
     const field = table === "sources" ? "title" : "name";
-    run.mutate(() => supabase.from(table).update({ [field]: next }).eq("id", id) as never, {
+    const patch = { [field]: next } as Record<string, string>;
+    run.mutate(() => (supabase.from(table) as never as { update: (v: unknown) => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> } }).update(patch).eq("id", id), {
       onSuccess: () => { refresh(); toast.success("Renamed"); },
     });
   };
@@ -407,7 +408,7 @@ function ChapterQuestions({ chapterId, subjectName }: { chapterId: string; subje
       origin: "manual",
       tags: tags.split(",").map((t) => t.trim().toLowerCase()).filter(Boolean),
     });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Question added");
     setQuestion("");
     setOptions(["", "", "", ""]);
@@ -420,7 +421,7 @@ function ChapterQuestions({ chapterId, subjectName }: { chapterId: string; subje
 
   const del = async (id: string) => {
     const { error } = await supabase.from("mcqs").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["mcqs"] });
   };
 
