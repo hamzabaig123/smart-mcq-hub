@@ -34,7 +34,9 @@ function shuffle<T>(list: T[]) {
   const arr = [...list];
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    const a = arr[i] as T;
+    arr[i] = arr[j] as T;
+    arr[j] = a;
   }
   return arr;
 }
@@ -143,7 +145,7 @@ function Practice() {
           user_id: user.id,
           mcq_id: q.id,
           session_id: session.id,
-          selected_index: answers[q.id],
+          selected_index: answers[q.id] ?? null,
           is_correct: answers[q.id] === q.correct_index,
           mode,
         }));

@@ -408,7 +408,7 @@ function ChapterQuestions({ chapterId, subjectName }: { chapterId: string; subje
       origin: "manual",
       tags: tags.split(",").map((t) => t.trim().toLowerCase()).filter(Boolean),
     });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Question added");
     setQuestion("");
     setOptions(["", "", "", ""]);
@@ -421,7 +421,7 @@ function ChapterQuestions({ chapterId, subjectName }: { chapterId: string; subje
 
   const del = async (id: string) => {
     const { error } = await supabase.from("mcqs").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["mcqs"] });
   };
 
