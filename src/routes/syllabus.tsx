@@ -138,7 +138,8 @@ function Syllabus() {
     const next = window.prompt("New name", current);
     if (!next || next === current) return;
     const field = table === "sources" ? "title" : "name";
-    run.mutate(() => supabase.from(table).update({ [field]: next }).eq("id", id) as never, {
+    const patch = { [field]: next } as Record<string, string>;
+    run.mutate(() => (supabase.from(table) as never as { update: (v: unknown) => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> } }).update(patch).eq("id", id), {
       onSuccess: () => { refresh(); toast.success("Renamed"); },
     });
   };
