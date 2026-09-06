@@ -103,6 +103,81 @@ export type Database = {
           },
         ]
       }
+      exam_questions: {
+        Row: {
+          created_at: string
+          exam_id: string
+          id: string
+          mcq_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          exam_id: string
+          id?: string
+          mcq_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          exam_id?: string
+          id?: string
+          mcq_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exam_questions_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exam_questions_mcq_id_fkey"
+            columns: ["mcq_id"]
+            isOneToOne: false
+            referencedRelation: "mcqs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exams: {
+        Row: {
+          chapter_ids: string[]
+          created_at: string
+          exam_date: string | null
+          id: string
+          name: string
+          note: string | null
+          subject_ids: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chapter_ids?: string[]
+          created_at?: string
+          exam_date?: string | null
+          id?: string
+          name: string
+          note?: string | null
+          subject_ids?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chapter_ids?: string[]
+          created_at?: string
+          exam_date?: string | null
+          id?: string
+          name?: string
+          note?: string | null
+          subject_ids?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       mcqs: {
         Row: {
           chapter_id: string | null
@@ -258,6 +333,76 @@ export type Database = {
             columns: ["chapter_id"]
             isOneToOne: false
             referencedRelation: "chapters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      study_plan_slots: {
+        Row: {
+          chapter_id: string | null
+          created_at: string
+          done: boolean
+          duration_min: number
+          id: string
+          note: string | null
+          source_id: string | null
+          start_time: string
+          subject_id: string | null
+          target_questions: number
+          updated_at: string
+          user_id: string
+          weekday: number
+        }
+        Insert: {
+          chapter_id?: string | null
+          created_at?: string
+          done?: boolean
+          duration_min?: number
+          id?: string
+          note?: string | null
+          source_id?: string | null
+          start_time?: string
+          subject_id?: string | null
+          target_questions?: number
+          updated_at?: string
+          user_id: string
+          weekday?: number
+        }
+        Update: {
+          chapter_id?: string | null
+          created_at?: string
+          done?: boolean
+          duration_min?: number
+          id?: string
+          note?: string | null
+          source_id?: string | null
+          start_time?: string
+          subject_id?: string | null
+          target_questions?: number
+          updated_at?: string
+          user_id?: string
+          weekday?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_plan_slots_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_plan_slots_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_plan_slots_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
             referencedColumns: ["id"]
           },
         ]
