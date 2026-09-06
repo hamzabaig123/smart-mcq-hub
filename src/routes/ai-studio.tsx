@@ -25,7 +25,7 @@ export const Route = createFileRoute("/ai-studio")({
       },
     ],
   }),
-  component: AiStudio;
+  component: AiStudio,
 });
 
 const readAsDataUrl = (file: File) =>
