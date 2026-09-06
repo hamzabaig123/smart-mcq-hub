@@ -142,7 +142,7 @@ function Settings() {
                 A short email each day nudging you to run a practice test.
               </p>
             </div>
-            <Tag tone={reminder ? "accent" : undefined}>{reminder ? "On" : "Off"}</Tag>
+            <Tag tone={reminder ? "accent" : "muted"}>{reminder ? "On" : "Off"}</Tag>
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
