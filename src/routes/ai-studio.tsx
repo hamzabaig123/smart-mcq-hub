@@ -103,12 +103,10 @@ function AiStudio() {
   };
 
   const decide = async (id: string, status: "approved" | "rejected", target?: string) => {
-    const subjectId = target ? (chapters.find((c) => c.id === target)?.subject_id ?? null) : undefined;
-    const patch: Record<string, unknown> = { status };
-    if (target) {
-      patch['chapter_id'] = target;
-      patch['subject_id'] = subjectId;
-    }
+    const subjectId = target ? (chapters.find((c) => c.id === target)?.subject_id ?? null) : null;
+    const patch = target
+      ? { status, chapter_id: target, subject_id: subjectId }
+      : { status };
     const { error } = await supabase.from("mcqs").update(patch).eq("id", id);
     if (error) {
       toast.error(error.message);
