@@ -14,6 +14,7 @@ import { Route as AiStudioRouteImport } from './routes/ai-studio'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ScannerRouteImport } from './routes/scanner'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SyllabusRouteImport } from './routes/syllabus'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const ScannerRoute = ScannerRouteImport.update({
   path: '/scanner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SyllabusRoute = SyllabusRouteImport.update({
   id: '/syllabus',
   path: '/syllabus',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
+  '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
+  '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
 }
 export interface FileRoutesById {
@@ -70,14 +78,28 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
+  '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/ai-studio' | '/auth' | '/practice' | '/scanner' | '/syllabus'
+    | '/'
+    | '/ai-studio'
+    | '/auth'
+    | '/practice'
+    | '/scanner'
+    | '/settings'
+    | '/syllabus'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai-studio' | '/auth' | '/practice' | '/scanner' | '/syllabus'
+  to:
+    | '/'
+    | '/ai-studio'
+    | '/auth'
+    | '/practice'
+    | '/scanner'
+    | '/settings'
+    | '/syllabus'
   id:
     | '__root__'
     | '/'
@@ -85,6 +107,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/practice'
     | '/scanner'
+    | '/settings'
     | '/syllabus'
   fileRoutesById: FileRoutesById
 }
@@ -94,6 +117,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   PracticeRoute: typeof PracticeRoute
   ScannerRoute: typeof ScannerRoute
+  SettingsRoute: typeof SettingsRoute
   SyllabusRoute: typeof SyllabusRoute
 }
 
@@ -134,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScannerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/syllabus': {
       id: '/syllabus'
       path: '/syllabus'
@@ -150,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   PracticeRoute: PracticeRoute,
   ScannerRoute: ScannerRoute,
+  SettingsRoute: SettingsRoute,
   SyllabusRoute: SyllabusRoute,
 }
 export const routeTree = rootRouteImport
