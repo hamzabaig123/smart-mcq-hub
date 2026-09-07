@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiStudioRouteImport } from './routes/ai-studio'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as PlanRouteImport } from './routes/plan'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ScannerRouteImport } from './routes/scanner'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -31,6 +32,11 @@ const AiStudioRoute = AiStudioRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PracticeRoute = PracticeRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-studio': typeof AiStudioRoute
   '/auth': typeof AuthRoute
+  '/plan': typeof PlanRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-studio': typeof AiStudioRoute
   '/auth': typeof AuthRoute
+  '/plan': typeof PlanRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai-studio': typeof AiStudioRoute
   '/auth': typeof AuthRoute
+  '/plan': typeof PlanRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-studio'
     | '/auth'
+    | '/plan'
     | '/practice'
     | '/scanner'
     | '/settings'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-studio'
     | '/auth'
+    | '/plan'
     | '/practice'
     | '/scanner'
     | '/settings'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-studio'
     | '/auth'
+    | '/plan'
     | '/practice'
     | '/scanner'
     | '/settings'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiStudioRoute: typeof AiStudioRoute
   AuthRoute: typeof AuthRoute
+  PlanRoute: typeof PlanRoute
   PracticeRoute: typeof PracticeRoute
   ScannerRoute: typeof ScannerRoute
   SettingsRoute: typeof SettingsRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/practice': {
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiStudioRoute: AiStudioRoute,
   AuthRoute: AuthRoute,
+  PlanRoute: PlanRoute,
   PracticeRoute: PracticeRoute,
   ScannerRoute: ScannerRoute,
   SettingsRoute: SettingsRoute,
