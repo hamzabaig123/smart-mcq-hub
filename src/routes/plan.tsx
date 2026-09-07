@@ -143,7 +143,10 @@ function PlanPage() {
         <div className="space-y-5">
           <Panel>
             <div className="flex flex-wrap items-center gap-5">
-              <Ring value={completion} stroke={colorStroke("accent")} label={`${completion}%`} />
+              <div className="relative grid place-items-center">
+                <Ring value={completion} size={84} stroke={6} color={colorStroke("accent")} />
+                <span className="absolute text-sm font-semibold">{completion}%</span>
+              </div>
               <div className="grid flex-1 gap-3 sm:grid-cols-3">
                 <Stat label="Blocks done" value={`${doneCount}/${slots.length}`} hint="this week" />
                 <Stat label="Planned time" value={`${Math.round(weekMinutes / 6) / 10}h`} hint="across the week" />
