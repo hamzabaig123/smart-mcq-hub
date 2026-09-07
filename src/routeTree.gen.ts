@@ -16,6 +16,7 @@ import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ScannerRouteImport } from './routes/scanner'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SyllabusRouteImport } from './routes/syllabus'
+import { Route as ApiPublicDailyRemindersRouteImport } from './routes/api/public/daily-reminders'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const SyllabusRoute = SyllabusRouteImport.update({
   path: '/syllabus',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicDailyRemindersRoute = ApiPublicDailyRemindersRouteImport.update({
+  id: '/api/public/daily-reminders',
+  path: '/api/public/daily-reminders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
+  '/api/public/daily-reminders': typeof ApiPublicDailyRemindersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
+  '/api/public/daily-reminders': typeof ApiPublicDailyRemindersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
+  '/api/public/daily-reminders': typeof ApiPublicDailyRemindersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/scanner'
     | '/settings'
     | '/syllabus'
+    | '/api/public/daily-reminders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/scanner'
     | '/settings'
     | '/syllabus'
+    | '/api/public/daily-reminders'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/scanner'
     | '/settings'
     | '/syllabus'
+    | '/api/public/daily-reminders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   ScannerRoute: typeof ScannerRoute
   SettingsRoute: typeof SettingsRoute
   SyllabusRoute: typeof SyllabusRoute
+  ApiPublicDailyRemindersRoute: typeof ApiPublicDailyRemindersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SyllabusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/daily-reminders': {
+      id: '/api/public/daily-reminders'
+      path: '/api/public/daily-reminders'
+      fullPath: '/api/public/daily-reminders'
+      preLoaderRoute: typeof ApiPublicDailyRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   ScannerRoute: ScannerRoute,
   SettingsRoute: SettingsRoute,
   SyllabusRoute: SyllabusRoute,
+  ApiPublicDailyRemindersRoute: ApiPublicDailyRemindersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

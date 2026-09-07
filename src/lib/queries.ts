@@ -172,3 +172,54 @@ export function computeStreak(dates: string[]) {
   }
   return streak;
 }
+
+/* ---------- study plan & exams ---------- */
+
+export type PlanSlot = {
+  id: string;
+  subject_id: string | null;
+  chapter_id: string | null;
+  source_id: string | null;
+  weekday: number;
+  start_time: string;
+  duration_min: number;
+  target_questions: number;
+  note: string | null;
+  done: boolean;
+};
+
+export type Exam = {
+  id: string;
+  name: string;
+  exam_date: string | null;
+  note: string | null;
+  subject_ids: string[];
+  chapter_ids: string[];
+  created_at: string;
+};
+
+export type ExamQuestion = { id: string; exam_id: string; mcq_id: string };
+
+export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+export const planSlotsQuery = () => ({
+  queryKey: ["plan-slots"],
+  queryFn: async () =>
+    unwrap<PlanSlot[]>(
+      await supabase.from("study_plan_slots").select("*").order("weekday").order("start_time"),
+    ),
+});
+
+export const examsQuery = () => ({
+  queryKey: ["exams"],
+  queryFn: async () =>
+    unwrap<Exam[]>(
+      await supabase.from("exams").select("*").order("exam_date", { ascending: true }).order("created_at"),
+    ),
+});
+
+export const examQuestionsQuery = () => ({
+  queryKey: ["exam-questions"],
+  queryFn: async () =>
+    unwrap<ExamQuestion[]>(await supabase.from("exam_questions").select("id,exam_id,mcq_id")),
+});
