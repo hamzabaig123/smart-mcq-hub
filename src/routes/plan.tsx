@@ -34,7 +34,7 @@ export const Route = createFileRoute("/plan")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: PlanPage;
+  component: PlanPage,
 });
 
 function PlanPage() {
