@@ -12,10 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiStudioRouteImport } from './routes/ai-studio'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ExamsRouteImport } from './routes/exams'
+import { Route as PlanRouteImport } from './routes/plan'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ScannerRouteImport } from './routes/scanner'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SyllabusRouteImport } from './routes/syllabus'
+import { Route as ApiPublicDailyRemindersRouteImport } from './routes/api/public/daily-reminders'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,6 +33,16 @@ const AiStudioRoute = AiStudioRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamsRoute = ExamsRouteImport.update({
+  id: '/exams',
+  path: '/exams',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PracticeRoute = PracticeRouteImport.update({
@@ -52,34 +65,48 @@ const SyllabusRoute = SyllabusRouteImport.update({
   path: '/syllabus',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicDailyRemindersRoute = ApiPublicDailyRemindersRouteImport.update({
+  id: '/api/public/daily-reminders',
+  path: '/api/public/daily-reminders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-studio': typeof AiStudioRoute
   '/auth': typeof AuthRoute
+  '/exams': typeof ExamsRoute
+  '/plan': typeof PlanRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
+  '/api/public/daily-reminders': typeof ApiPublicDailyRemindersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-studio': typeof AiStudioRoute
   '/auth': typeof AuthRoute
+  '/exams': typeof ExamsRoute
+  '/plan': typeof PlanRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
+  '/api/public/daily-reminders': typeof ApiPublicDailyRemindersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-studio': typeof AiStudioRoute
   '/auth': typeof AuthRoute
+  '/exams': typeof ExamsRoute
+  '/plan': typeof PlanRoute
   '/practice': typeof PracticeRoute
   '/scanner': typeof ScannerRoute
   '/settings': typeof SettingsRoute
   '/syllabus': typeof SyllabusRoute
+  '/api/public/daily-reminders': typeof ApiPublicDailyRemindersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,38 +114,50 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-studio'
     | '/auth'
+    | '/exams'
+    | '/plan'
     | '/practice'
     | '/scanner'
     | '/settings'
     | '/syllabus'
+    | '/api/public/daily-reminders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/ai-studio'
     | '/auth'
+    | '/exams'
+    | '/plan'
     | '/practice'
     | '/scanner'
     | '/settings'
     | '/syllabus'
+    | '/api/public/daily-reminders'
   id:
     | '__root__'
     | '/'
     | '/ai-studio'
     | '/auth'
+    | '/exams'
+    | '/plan'
     | '/practice'
     | '/scanner'
     | '/settings'
     | '/syllabus'
+    | '/api/public/daily-reminders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiStudioRoute: typeof AiStudioRoute
   AuthRoute: typeof AuthRoute
+  ExamsRoute: typeof ExamsRoute
+  PlanRoute: typeof PlanRoute
   PracticeRoute: typeof PracticeRoute
   ScannerRoute: typeof ScannerRoute
   SettingsRoute: typeof SettingsRoute
   SyllabusRoute: typeof SyllabusRoute
+  ApiPublicDailyRemindersRoute: typeof ApiPublicDailyRemindersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -142,6 +181,20 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exams': {
+      id: '/exams'
+      path: '/exams'
+      fullPath: '/exams'
+      preLoaderRoute: typeof ExamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/practice': {
@@ -172,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SyllabusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/daily-reminders': {
+      id: '/api/public/daily-reminders'
+      path: '/api/public/daily-reminders'
+      fullPath: '/api/public/daily-reminders'
+      preLoaderRoute: typeof ApiPublicDailyRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -179,10 +239,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiStudioRoute: AiStudioRoute,
   AuthRoute: AuthRoute,
+  ExamsRoute: ExamsRoute,
+  PlanRoute: PlanRoute,
   PracticeRoute: PracticeRoute,
   ScannerRoute: ScannerRoute,
   SettingsRoute: SettingsRoute,
   SyllabusRoute: SyllabusRoute,
+  ApiPublicDailyRemindersRoute: ApiPublicDailyRemindersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
