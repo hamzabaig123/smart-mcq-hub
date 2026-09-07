@@ -1,11 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-/**
- * Sends the daily study reminder to the signed-in user.
- * Email delivery runs through the user's connected Gmail account; until that
- * connection exists we fail loudly instead of pretending an email was sent.
- */
+/** Sends the daily study reminder to the signed-in user through the connected Gmail account. */
 export const sendReminderNow = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => (input ?? {}) as Record<string, never>)
@@ -21,10 +17,15 @@ export const sendReminderNow = createServerFn({ method: "POST" })
     const to = profile?.reminder_email ?? profile?.email;
     if (!to) throw new Error("Add an email address for reminders first.");
 
-    const clientKey = process.env['GOOGLE_MAIL_APP_USER_CONNECTOR_CLIENT_API_KEY'];
-    if (!clientKey) {
-      throw new Error("Gmail is not connected yet, so reminder emails cannot be sent.");
-    }
+    const { sendGmail, reminderEmail } = await import("./gmail.server");
+    const { reminderStats } = await import("./reminder-stats.server");
+    const stats = await reminderStats(supabase as never, userId);
+    const { subject, html } = reminderEmail({
+      name: profile?.display_name ?? null,
+      examName: profile?.exam_name ?? null,
+      ...stats,
+    });
 
-    throw new Error("Gmail is connected but this account has not authorised sending yet.");
+    await sendGmail(to, subject, html);
+    return { sent: true, to };
   });
