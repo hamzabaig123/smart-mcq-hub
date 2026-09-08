@@ -7,6 +7,8 @@ import { profileQuery, mcqsQuery } from "@/lib/queries";
 const WORKSPACE: { to: string; label: string; badgeKey?: string }[] = [
   { to: "/", label: "Dashboard" },
   { to: "/syllabus", label: "Syllabus" },
+  { to: "/plan", label: "Study Plan" },
+  { to: "/exams", label: "Exams" },
   { to: "/practice", label: "Practice & Test" },
   { to: "/scanner", label: "QR Scanner" },
   { to: "/ai-studio", label: "AI Studio", badgeKey: "pending" },

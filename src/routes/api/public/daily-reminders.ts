@@ -9,8 +9,12 @@ export const Route = createFileRoute("/api/public/daily-reminders")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const denied = await authenticateCronRequest(request);
-        if (denied) return denied;
+        const token = /^Bearer ([^\s,]+)$/.exec(request.headers.get("authorization") ?? "")?.[1];
+        const ownToken = process.env["REMINDER_CRON_TOKEN"];
+        if (!ownToken || token !== ownToken) {
+          const denied = await authenticateCronRequest(request);
+          if (denied) return denied;
+        }
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { sendGmail, reminderEmail } = await import("@/lib/gmail.server");
